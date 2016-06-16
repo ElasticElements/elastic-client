@@ -20,7 +20,8 @@
   ],
   "dependencies": {
     "polymer": "^1.5.0",
-    "ee-common": "ElasticElements/ee-common"
+    "ee-common": "ElasticElements/ee-common",
+    "elasticsearch": "^11.0.1"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
