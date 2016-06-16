@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <title>elastic-client</title>
+
+  <script src="../../webcomponentsjs/webcomponents.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  
+
+  <link rel="import" href="../../polymer/polymer.html">
+  <link rel="import" href="../elastic-client.html">
+</head>
+<body>
+  <test-fixture id="elastic-client-fixture">
+    <template>
+      <elastic-client config='{"host": "http://localhost:9200"}'>
+      </elastic-client>
+    </template>
+  </test-fixture>
+
+  <script>
+    (function () {
+      'use strict';
+      suite('<elastic-client>', function() {
+        var clientElem;
+
+        setup(function () {
+          clientElem = fixture('elastic-client-fixture');
+        });
+
+        test('defines the config property', function () {
+          expect(clientElem.config).to.be.an('object');
+          expect(clientElem.config.host).to.be.equal('http://localhost:9200');
+        });
+
+        test('defines the client property', function () {
+          expect(clientElem.client).to.be.an('object');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

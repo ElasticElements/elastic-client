@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>elastic-client Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../elastic-client.html">
+  </head>
+  <body unresolved>
+
+    <p>An example of <code>&lt;elastic-client&gt;</code></p>
+    <template is="dom-bind">
+      <elastic-client 
+        config='{"host": "http://localhost:9200"}' 
+        client="{{client}}"
+        cluster-status="{{my-status}}">
+      </elastic-client>
+
+      <p>Elasticsearch cluster status: <strong>{{my-status}}</strong></p>
+    </template>
+  </body>
+</html>

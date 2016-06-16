@@ -1,0 +1,80 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../ee-common/ee-common.html">
+
+<!--
+An element which creates and returns a client connection to an Elasticsearch server
+
+Example:
+
+      <elastic-client 
+        config='{"host": "http://localhost:9200"}' 
+        client="{{client}}"
+        cluster-status="{{my-status}}">
+      </elastic-client>
+
+@demo demo/index.html
+-->
+
+<script>
+
+  Polymer({
+    is: 'elastic-client',
+
+    properties: {
+      /** 
+       * An object that contains the elasticsearch client construction configuration 
+       * options.
+       * Example:
+       *
+       *     <elastic-client 
+       *         config='{"host": "http://localhost:9200"}'>
+       *     </elastic-client>
+       *
+       * The complete configuration options reference is found in the 
+       * Elasticsearch documentation here: 
+       * https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-options
+       */
+      config: {
+        type: Object,
+        observer: '_createEsClient'
+      },
+
+      /**
+       * indicates whether the connection to the Elasticsearch server succeeded or failed.
+       * @return {string}
+       */
+      clusterStatus: {
+        type: String,
+        value: 'down',
+        notify: true
+      },
+
+      /**
+       * an instance of elasticsearch.Client.  See 
+       * https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html 
+       * for elasticsearch.js client API documentation.
+       */
+
+      client: {
+        type: Object,
+        notify: true
+      }
+    },
+    _createEsClient: function(config) {
+      this.client = new elasticsearch.Client(config);
+      var self = this;
+
+      this.client.ping({
+        requestTimeout: 30000,
+        hello: 'elasticsearch'
+      })
+      .then(function () {
+        self.clusterStatus = 'up';
+      })
+      .catch(function(error) {
+        console.error('elasticsearch cluster is down!', error);
+      });
+    }
+  });
+
+</script>
